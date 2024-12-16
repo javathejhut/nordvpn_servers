@@ -20,8 +20,9 @@ jobs:
           declare -a countryid=("13" "38" "74" "81" "97" "100" "108" "153" "195" "208" "209" "211" "227" "228")
           for (( i=0; i<${#countrycode[@]}; i++ ));
           do
-            curl --silent "https://api.nordvpn.com/v1/servers/recommendations?filters\[country_id\]=${countryid[$i]}&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=300" | jq --raw-output '.[].hostname' > lists/${countrycode[$i]}.txt
+            curl --silent "https://api.nordvpn.com/v1/servers/recommendations?filters\[country_id\]=${countryid[$i]}&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=350" | jq --raw-output '.[].hostname' > lists/${countrycode[$i]}.txt
           done
+          cat lists/*.txt > lists/all_countries.txt 
 
       - name: Commit and push changes
         uses: actions-js/push@master
